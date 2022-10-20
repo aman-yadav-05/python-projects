@@ -2,26 +2,37 @@ alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
             'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
             'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
-direction = input(
-    "Type 'encode' to encrypt, type 'decode' to decrypt:\n").lower()
-text = input("Type your message:\n").lower()
-shift = int(input("Type the shift number:\n"))
+# for repetative ness
 
+flag = True
 
-def caesar(start_text, shift_amount, cipher_direction):
-    end_text = ""
-    if cipher_direction == "decode":
-        shift_amount *= -1
-    for letter in start_text:
-        position = alphabet.index(letter)
-        new_position = position+shift_amount
-        new_letter = alphabet[new_position]
-        end_text += new_letter
+while flag:
+    direction = input(
+        "Type 'encode' to encrypt, type 'decode' to decrypt:\n").lower()
+    text = input("Type your message:\n").lower()
+    shift = int(input("Type the shift number:\n"))
+    shift %= 26
 
-    print(f" the {cipher_direction}d text is {end_text}")
+    def caesar(start_text, shift_amount, cipher_direction):
+        end_text = ""
+        if cipher_direction == "decode":
+            shift_amount *= -1
+        for letter in start_text:
+            if letter in alphabet:
+                position = alphabet.index(letter)
+                new_position = position+shift_amount
+                new_letter = alphabet[new_position]
+                end_text += new_letter
+            else:
+                end_text += letter
+        print(f" the {cipher_direction}d text is {end_text}")
 
+    caesar(start_text=text, shift_amount=shift, cipher_direction=direction)
 
-caesar(start_text=text, shift_amount=shift, cipher_direction=direction)
+    res = input("do you want to continue? yes or no?").lower()
+    if res == "no":
+        flag = False
+        print("Everything secured")
 
 # #removing repetative function
 # def encrypt(plain_text, amount_shift):
